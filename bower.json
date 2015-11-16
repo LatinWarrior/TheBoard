@@ -1,0 +1,26 @@
+{
+  "name": "TheBoard",
+  "description": "A message board based on sticky notes.",
+  "main": "server.js",
+  "authors": [
+    "Luis Blanco"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/LatinWarrior/TheBoard",
+  "moduleType": [
+    "amd"
+  ],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.1.1",
+    "underscore": "~1.6.0"
+  }
+}

@@ -1,9 +1,9 @@
-(function (data) {
+﻿(function(data) {
 
-    var seedData = require("./seedData");
+  var seedData = require("./seedData");
 
-    data.getNodeCategories = function(next) {
-        next(null, seedData.initialNotes);
-    };
+  data.getNoteCategories = function (next) {
+    next(null, seedData.initialNotes);
+  };
 
 })(module.exports);

@@ -13,7 +13,8 @@ var flash = require("connect-flash");
 app.set("view engine", "vash");
 
 // Opt into services.
-app.use(express.urlencoded());
+app.use(express.urlencoded());  // Get the form to work by accepting URL encoded.
+app.use(express.json());        // Opt to accept json in the body
 // Opt into using cookies to track session for a specific user.
 app.use(express.cookieParser());
 // We need to opt in on session state for flash.

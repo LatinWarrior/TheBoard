@@ -20,37 +20,63 @@
         });
     };
 
-    data.createNewCategory = function (categoryName, next) {
+    data.getNotes = function(categoryName, next) {
+
         database.getDb(function(err, db) {
             if (err) {
-                next(err, null);    // null parameter is not needed.
+                next(err, null); // null parameter is not needed.
             } else {
-                db.notes.find({ name: categoryName }).count(function(err, count) {
-                    if (err) {
-                        next(err, null);    // null parameter is not needed.
-                    } else {
-                        if (count !== 0) {
-                            next("Category already exists.", null); // null parameter is not needed.
-                        } else {
-                            var cat = {
-                                name: categoryName,
-                                notes: []
-                            };
-                            
-                            db.notes.insert(cat, function (err) {
-                                if (err) {
-                                    next(err);
-                                } else {
-                                    next(null);
-                                }
-                            });
-                        }
-                    }
-                });
-                
+                db.notes.findOne({name: categoryName}, next);
             }
         });
     };
+    
+    data.addNote = function(categoryName, noteToInsert, next) {
+
+        database.getDb(function(err, db) {
+            if (err) {
+                next(err, null); // null parameter is not needed.
+            } else {
+                db.notes.update(
+                { name: categoryName },
+                { $push: { notes: noteToInsert } },
+                next);  // Use next since all it can do is pass up back an error at this point.
+            }
+        });
+    }
+
+    data.createNewCategory = function(categoryName, next) {
+
+            database.getDb(function(err, db) {
+                if (err) {
+                    next(err, null); // null parameter is not needed.
+                } else {
+                    db.notes.find({ name: categoryName }).count(function(err, count) {
+                        if (err) {
+                            next(err, null); // null parameter is not needed.
+                        } else {
+                            if (count !== 0) {
+                                next("Category already exists.", null); // null parameter is not needed.
+                            } else {
+                                var cat = {
+                                    name: categoryName,
+                                    notes: []
+                                };
+
+                                db.notes.insert(cat, function(err) {
+                                    if (err) {
+                                        next(err);
+                                    } else {
+                                        next(null);
+                                    }
+                                });
+                            }
+                        }
+                    });
+
+                }
+            });
+        };
 
     function seedDatabase() {
         database.getDb(function(err, db) {
